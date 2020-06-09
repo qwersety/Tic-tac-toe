@@ -1,0 +1,125 @@
+@font-face {
+	font-family: SansSerif;
+	src: url(../fonts/Sans_Serif.ttf);
+
+}
+
+@font-face {
+	font-family: TimesNewRoman;
+	src: url(../fonts/Times_New_Roman.ttf);
+}
+
+@font-face {
+	font-family: PlumbMedium;
+	src: url(../fonts/Plumb.ttf);
+}
+
+@font-face {
+	font-family: MODDigitalStripCyrillicBold;
+	src: url(../fonts/MODDigitalStripCyrillicBold.ttf);
+}
+
+
+body{
+	min-height: 500px;
+	min-width: 500px;
+	margin: 0;
+	font-family: MODDigitalStripCyrillicBold,PlumbMedium, Verdana, sans-serif, TimesNewRoman;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+
+}
+
+.startPanelShadow{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position:fixed;
+	width:100%;
+	height:100%;
+	background-color: rgba(0,0,0,0.5);
+	overflow:hidden;
+	left:0;
+	top:0;
+	z-index: 5;
+}
+
+.startPanel{
+	border-radius: 3vh;
+	background-color:white;
+	width:70vh;
+	position: fixed;
+	min-width: 400px;
+	min-height: 300px;
+	box-shadow: 0px 0px 1em #4682B4;
+
+}
+
+.startPanel__greeting{
+	text-align:center;
+	font-size:1em;
+}
+
+.startPanel__form{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+}
+
+.startPanel__nameInput{
+	font-family: MODDigitalStripCyrillicBold,PlumbMedium, Verdana, sans-serif, TimesNewRoman;
+	height:2em;
+	text-align:center;
+	font-size: 1.5em;
+	border: 1px solid #4682B4;
+	box-shadow: 0px 0px 0.5em #4682B4;
+	border-radius:3em;
+	outline:none;
+}
+
+.startPanel__nameInput:hover{
+	box-shadow: 0px 0px 1em #4682B4;
+}
+
+.startPanel__nameButton{
+	border-radius:1em;
+	margin:1em 0;
+	padding:0.3em;
+	font-family: MODDigitalStripCyrillicBold,PlumbMedium, Verdana, sans-serif, TimesNewRoman;
+	font-size:2em;
+	text-align:center;
+}
+
+.startPanel__nameButton:hover{
+		box-shadow: 0px 0px 0.5em #4682B4;
+}
+
+
+.fieldBox{
+	box-shadow: 0px 0px 1em #66CDAA;
+	padding: 0;
+	background-color: #4682B4;
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 5px;
+}
+.fieldCell{
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: white;
+	width: 100px;
+	height: 100px;
+}
+.fieldCell:hover{
+	background: #66CDAA;
+	cursor: pointer;
+}
+.canvas{
+	width: 200%;
+	height: 100%;
+}
