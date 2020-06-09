@@ -97,6 +97,12 @@ body{
 		box-shadow: 0px 0px 0.5em #4682B4;
 }
 
+.helloBlock{
+	width: 70vw;
+	text-align: center;
+	margin: 1em 0;
+	font-size: 1.2em;
+}
 
 .fieldBox{
 	box-shadow: 0px 0px 1em #66CDAA;
