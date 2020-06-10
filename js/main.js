@@ -9,16 +9,26 @@ function startClick(){
   let userName = form.userName.value;
   if (nameChecker(userName)){
     //ачинаем игру, передаем имя игрока
-    form.onsubmit = newGame(userName);
+    form.onsubmit = game(userName);
     // удаление стартового окна
     //document.getElementById('startPanel').remove();
   }
 }
 
-function newGame(userName) {
+function game(userName) {
   document.body.innerHTML=renderGame(userName);
-  // добавляем чистое игровое поле
-  document.body.innerHTML+=renderField();
+  // начинаем новую игру, передаем пустые результаты по статичтике
+  newGame({
+    vin: 0,
+    lose: 0,
+    draw:0
+  })
+}
+
+async function newGame(situation) {
+
+  await sleep(1000);
+  document.getElementById('gameBox').innerHTML=renderField();
   // основные правила игры
   // объявление и заполнение массива в 9 ячеек для хранения статуса
   let gameField=[];
@@ -30,36 +40,89 @@ function newGame(userName) {
   // переменная шага (начинаем с 1), дальше и не нужна. Пока оставлю
   let stepNumber=1;
   // запускаем шаги игроков
-  steps(gameField, firstStep, firstStep, stepNumber);
+  steps(gameField, firstStep, firstStep,stepNumber, situation);
 }
 
 // формирование блоков (тег, id, класс, контент)
-function composer(tag, id, clas, content) {
+function composer(tag, id, classes, content) {
   let renderComposerString='';
   let identif='';
   if (id!='') identif+=`id=${id} `;
-  if (clas!='') identif+=`class=${clas}`;
+  if (classes!='') identif+=`class="${classes}"`;
   renderComposerString+=`<${tag} ${identif}>${content}</${tag}>`
   return renderComposerString;
 }
 
+// создаие игрового поля
 function renderGame(name) {
   let renderGameField='';
   // строка для шапки
   let helloString= `Привет, ${name}!  Это игра - "Крестики-нолики", она не имеет логического завершения.  Ты играешь против бота с развитым ИИ, ниже показан счет игры, попробуй выиграть больше раз, чем компьютер... УДАЧИ! =)`
   renderGameField+=composer('div', '', 'helloBlock', helloString);
+  // цегтрадбный блок со счетом и данными по ходу
+  let renderMidleBlock="";
+  let stepString="";
+  stepString+=composer('div', 'step-number', 'gameInfoBlock_step', 'Ход № 0');
+  stepString+=composer('div', 'step-action', 'gameInfoBlock_step', '...');
+  renderMidleBlock+=composer('div', '', 'gameInfoBlock_score gameInfoBlock_general', 'Твой счет:');
+  renderMidleBlock+=composer('div', '', 'gameInfoBlock_score gameInfoBlock_general', `побед - `);
+  renderMidleBlock+=composer('div', 'rezult-vin', 'gameInfoBlock_rezult gameInfoBlock_general', '0');
+  renderMidleBlock+=composer('div', '', 'gameInfoBlock_steps',  `${stepString}`);
+  renderMidleBlock+=composer('div', '', 'gameInfoBlock_score gameInfoBlock_general', `поражений - `);
+  renderMidleBlock+=composer('div', 'rezult-lose', 'gameInfoBlock_rezult gameInfoBlock_general', '0');
+  renderMidleBlock+=composer('div', '', 'gameInfoBlock_score gameInfoBlock_general', `ничьих - `);
+  renderMidleBlock+=composer('div', 'rezult-draw', 'gameInfoBlock_rezult gameInfoBlock_general', '0');
+  renderGameField+=composer('div', '', 'gameInfoBlock', `${renderMidleBlock}`);
+  // построение игровой сетки
+  renderGameField+=composer('div', 'gameBox', 'fieldBox', `${renderField()}`);
+
   return renderGameField;
 }
 
+// функкция построения игрового поля
+function renderField() {
+  let fieldString='';
+  for (let i = 1; i <= 9; i++) {
+    fieldString+=composer('div', `cell-${i}`, 'fieldBox__cell', `${composer('canvas', `canvas-${i}`, 'fieldBox__canvas', '')}`);
+  }
+  return fieldString;
+}
+
+// заполнение данных по ходу
+function stepInfo(number, whoStep) {
+  // № хода
+  let stepNumberString=`Ход № ${number}...`;
+  document.getElementById('step-number').innerHTML=stepNumberString;
+  // Кто ходит
+  let stepString='';
+  if (whoStep==1) {
+    stepString='Жди!'
+  } else {
+    stepString='Ходи!'
+  }
+  document.getElementById('step-action').innerHTML=stepString;
+}
+
+function scoreRefresher(situation) {
+  document.getElementById('rezult-vin').innerHTML=situation.vin;
+  document.getElementById('rezult-lose').innerHTML=situation.lose;
+  document.getElementById('rezult-draw').innerHTML=situation.draw;
+}
+
 // функция обработки хода
-async function steps(gameField, firstStep, whoStep,stepNumber) {
+async function steps(gameField, firstStep, whoStep,stepNumber, situation) {
+  stepInfo(stepNumber,whoStep)
   if (stepNumber<=9) {
     if ( whoStep==1) {
       computerStep();
     } else
     if ( whoStep==2) userStep();
   } else {
-    setTimeout(alertSay, 3000, "Ничья!");
+    setTimeout(alertSay, 1000, "Ничья!");
+    situation.draw++;
+    scoreRefresher(situation);
+    newGame(situation);
+    newGame()
   }
 
   // ход компьютера
@@ -76,10 +139,10 @@ async function steps(gameField, firstStep, whoStep,stepNumber) {
           gameField[step]=1;
           stepNumber++;
           whoStep=2;
-          if (winChecker(gameField)){
+          if (winChecker(gameField, situation)){
             whoStep=0;
           } else{
-            steps(gameField, firstStep, whoStep, stepNumber);
+            steps(gameField, firstStep, whoStep,stepNumber, situation);
           }
         }
       }
@@ -120,10 +183,10 @@ async function steps(gameField, firstStep, whoStep,stepNumber) {
         // даем флаг хода компьютера
         whoStep=1;
         // вызываем функцию хода
-        if (winChecker(gameField)){
+        if (winChecker(gameField, situation)){
           whoStep=0;
         } else{
-          steps(gameField, firstStep, whoStep, stepNumber);
+          steps(gameField, firstStep, whoStep,stepNumber, situation);
         }
       }
     };
@@ -131,7 +194,7 @@ async function steps(gameField, firstStep, whoStep,stepNumber) {
 }
 
 //Функция определения победителя
-function winChecker(gameField) {
+function winChecker(gameField, situation) {
   // заводим две строки и расспределяем по ним номера клеток с шагами игроков
   let playerSteps='';
   let computerSteps='';
@@ -147,10 +210,16 @@ function winChecker(gameField) {
 
   if (checkSteps(playerSteps)) {
     setTimeout(alertSay, 1000, "Вы победили!");
+    situation.vin++;
+    scoreRefresher(situation);
+    newGame(situation);
     globalFlag=true;
   }
   if (checkSteps(computerSteps)) {
     setTimeout(alertSay, 1000, "Вы проиграли!");
+    situation.lose++;
+    scoreRefresher(situation);
+    newGame(situation);
     globalFlag=true;
   }
 
@@ -160,14 +229,11 @@ function winChecker(gameField) {
     let winArray=[[1,2,3],[4,5,6],[7,8,9],[7,4,1],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
     let flag=false;
     for (let i = 0; i < winArray.length; i++) {
-      console.log('----');
       let counter=0;
       for (let j = 0; j < winArray[i].length; j++) {
         for (let x = 0; x < stringSteps.length; x++) {
           if (stringSteps[x]==winArray[i][j]){
-            console.log('чекаю '+winArray[i][j]+'с '+stringSteps[x]);
             counter++;
-            console.log('счетчик'+counter);
             break;
           }
         }
@@ -257,17 +323,6 @@ function nameChecker(userName) {
     if (corrector==false) break;
   }
   return corrector;
-}
-
-// функкция построения игрового поля
-function renderField() {
-  let fieldString='';
-  fieldString='<div id="gameBox" class="fieldBox">';
-  for (let i = 1; i <= 9; i++) {
-    fieldString+=`<div id="cell-${i}" class="fieldCell"><canvas id="canvas-${i}" class="canvas"></canvas></div>`;
-  }
-  fieldString+='</div>';
-  return fieldString;
 }
 
 // функция собирает и приписывает в начало textarea информации боя.
