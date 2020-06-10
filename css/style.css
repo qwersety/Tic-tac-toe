@@ -14,127 +14,156 @@
 	src: url(../fonts/Plumb.ttf);
 }
 
+@font-face {
+	font-family: MODDigitalStripCyrillicBold;
+	src: url(../fonts/MODDigitalStripCyrillicBold.ttf);
+}
+
+
 body{
+	min-height: 500px;
+	min-width: 500px;
 	margin: 0;
-	font-family:  sans-serif, TimesNewRoman, PlumbMedium, Verdana;
+	font-family: MODDigitalStripCyrillicBold,PlumbMedium, Verdana, sans-serif, TimesNewRoman;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	background-color: white;
 
 }
 
-#arrayBlock{
-	color:#4B0082;
-	text-shadow: 1px 1px 2px black, 0 0 1em #008B8B;
+.startPanelShadow{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position:fixed;
+	width:100%;
+	height:100%;
+	background-color: rgba(0,0,0,0.5);
+	overflow:hidden;
+	left:0;
+	top:0;
+	z-index: 5;
 }
 
-.titleBlock{
- display: inline-flex;
+.startPanel{
+	padding: 20px 10px;
+	border-radius: 3vh;
+	background-color:white;
+	width:40vw;
+	position: fixed;
+	min-width: 400px;
+	box-shadow: 0px 0px 1em #4682B4;
+
 }
 
-.titleText{
-	font-size: 1em;
+.startPanel__greeting{
+	margin: 0 auto 20px;
+	text-align:center;
+	font-size:1em;
+}
+
+.startPanel__form{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+	margin: 0;
+}
+
+.startPanel__nameInput{
+	font-family: MODDigitalStripCyrillicBold,PlumbMedium, Verdana, sans-serif, TimesNewRoman;
+	height:2em;
+	text-align:center;
+	font-size: 1.5em;
+	border: 1px solid #4682B4;
+	box-shadow: 0px 0px 0.5em #4682B4;
+	border-radius:3em;
+	outline:none;
+}
+
+.startPanel__nameInput:hover{
+	box-shadow: 0px 0px 1em #4682B4;
+}
+
+.startPanel__nameButton{
+	border-radius:1em;
+	margin:20px 0 0 ;
+	padding:0.3em;
+	font-family: MODDigitalStripCyrillicBold,PlumbMedium, Verdana, sans-serif, TimesNewRoman;
+	font-size:2em;
+	text-align:center;
+}
+
+.startPanel__nameButton:hover{
+		box-shadow: 0px 0px 0.5em #4682B4;
+}
+
+.helloBlock{
+	width: 50vw;
 	text-align: center;
-	width: 600px;
-	color: #008B8B;
+	margin: 1em 0;
+	font-size: 1.2em;
 }
 
-.form{
- display: flex;
- flex-direction: column;
+.gameInfoBlock{
+	display: grid;
+	margin-bottom: 15px;
+	width: 350px;
+	grid-template-columns: 3fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 }
-.inputs{
-	width:150px;
+
+
+.gameInfoBlock_general{
+	margin: 5px 0;
+}
+
+.gameInfoBlock_score{
+	text-align: right;
+}
+
+.gameInfoBlock_rezult{
+	text-align: center;
+}
+
+.gameInfoBlock_steps{
+	grid-area: 2/1/4/2;
+	font-size: 	1.2em;
+	margin: 10px auto 0;
+	box-shadow: -3px -3px 10px #66CDAA;
+	color:#4682B4;
+}
+
+.gameInfoBlock_step{
+	width: 110px;
 	height: 30px;
-	margin: 3px;
-	text-align:center;
-	border: 0px solid #4e1563;
-	box-shadow: 0 0 3px #008B8B;
-	border-radius:3em;
-	margin-top: 10px;
-	outline:none;
-	font-weight: 600;
-	color: #FFA9A1;
+	text-align: center;
+	margin: auto 0;
 }
 
-.inputBatton{
-	width:150px;
-	height: 30px;
-	padding: 10px 0 0 0;
-	margin: 10px auto;
-	text-align:center;
-	background: #008B8B;
-	border: 0px solid #4e1563;
-	box-shadow: 0 0 3px #008B8B;
-	border-radius:3em;
-	outline:none;
-	font-weight: 600;
-	color: #FFA9A1;
+.fieldBox{
+	box-shadow: 0px 0px 1em #66CDAA;
+	padding: 0;
+	background-color: #4682B4;
+	display: grid;
+	grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 5px;
 }
-
-.inputBatton{
+.fieldBox__cell{
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: white;
+	width: 100px;
+	height: 100px;
+}
+.fieldBox__cell:hover{
+	background: #66CDAA;
 	cursor: pointer;
 }
-
-.mainField{
-	display: grid;
-	grid-column: 1;
-	grid-row: 1;
-}
-
-.sortingTree{
-	grid-area: 1 / 1 / 2/2;
-	display: inline-grid;
-	justify-content: center;
-	grid-gap: 0;
-	padding: 15px;
-	font-size: 1em;
-}
-
-.cell{
-	text-align: center;
-	border-radius:50em;
-	border: 1px solid white;
-	height: 50px;
-	width: 50px;
-}
-
-.pointTest{
-	background: blue;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	z-index: 3;
-	border-radius:50em;
-	height: 50px;
-	width: 50px	;
-}
-
-.point{
-	background: radial-gradient(white, #FFA9A1);
-	box-shadow: 0 0 10px #008B8B;
-	color: #008B8B;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	z-index: 3;
-	border-radius:50em;
-	height: 50px;
-	width: 50px	;
-}
-
-.inPoint{
-	font-size: 2em;
-	text-align: center;
-	width: auto;
-	height: auto;
-}
-
-.pointCanvas{
-	padding: 15px;
-	grid-area: 1 / 1 / 2/2;
-	display: block;
- 	position: relative;
+.fieldBox__canvas{
+	width: 200%;
+	height: 100%;
 }

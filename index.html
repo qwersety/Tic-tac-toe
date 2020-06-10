@@ -2,27 +2,19 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8">
-    <title>Сортировка</title>
+    <title>Крестики-нолики</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/main.js" defer></script>
   </head>
   <body>
-    <div class='titleBlock'>
-      <div class='titleText'>
-        Данная программа наглядно сортирует автоматически сгенерированный набор случайных чисел, имитируя метод сортировки "бинарное дерево". <br>
-        После ввода <b>числа элементов</b> сортировки и <b>скорости</b> построения дерева нажмите кнопку <b>"начать"</b>. Выстроенные в ряд шары - результат сортировки.<br>
-        Внимание! Вводите целые, положительные числа от 1 до 100 (больше не рекомендую!). Оптимально: количество = 10-20, скорость = 5-10. При выборе числа элементов более 20, уменьшайте масштаб страницы!
-        <div>Массив до сортировки:</div><div id='arrayBlock'></div>
-      </div>
-      <form id="startForm" class="form" action="#" method="post">
-        <input id="numberNumbers" type="text"  required placeholder="Число элементов" maxlength="3" title="Не рекомендую больше 100!"  name="numNums" class="inputs">
-        <input id="speedMove" type="text"  required placeholder="Скорость" maxlength="3" title="Лучше что-то близкое к числу элементов!"  name="speedT" class="inputs">
-        <div id="startClick"  class="inputBatton">Начать</div>
-      </form>
-    </div>
-    <div class='mainField'>
-      <div class='sortingTree' id='sortingTree'></div>
-      <canvas class="pointCanvas" id="canvasField"></canvas>
-    </div>
+    <div id="startPanel" class="startPanelShadow">
+  		<div class="startPanel">
+  			<p class="startPanel__greeting" >Приветствую тебя в игре "Крестки-нолики", впереди тебя ждет ожесточенная игрa с ИИ высокого уровня! Введи свое имя и жми "НАЧАТЬ!"</p>
+  			<form id="startForm" name="startForm" action="#" class="startPanel__form" method="post">
+  				<input id="userName" type="text" autofocus required placeholder="Введите имя" maxlength="15" title="От 1 до 15 символов!" required name="userName" class="startPanel__nameInput">
+  				<input id="startClick" type="submit" value="НАЧАТЬ!" class="startPanel__nameButton">
+  			</form>
+  		</div>
+  	</div>
   </body>
 </html>
